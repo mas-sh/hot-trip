@@ -1,0 +1,8 @@
+<div class="labels">
+  <span>{{ formatLabel()(value()[0]) }}</span>
+  <span>{{ formatLabel()(value()[1]) }}</span>
+</div>
+<mat-slider [min]="min()" [max]="max()" [step]="step()">
+  <input matSliderStartThumb [value]="value()[0]" (valueChange)="setStart($event)" aria-label="From" />
+  <input matSliderEndThumb [value]="value()[1]" (valueChange)="setEnd($event)" aria-label="To" />
+</mat-slider>

@@ -1,0 +1,15 @@
+:host {
+  display: block;
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+}
+
+mat-slider {
+  display: block;
+  width: 100%;
+  margin: 0;
+}
