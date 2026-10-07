@@ -1,0 +1,19 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <h2>Contact details</h2>
+
+  <div class="fields">
+    <ui-textfield class="wide" formControlName="fullName" label="Full name" [errorMessage]="fullNameError()" />
+    <ui-textfield formControlName="email" label="Email" type="email" [errorMessage]="emailError()" />
+    <ui-textfield formControlName="phone" label="Contact number" type="tel" [errorMessage]="phoneError()" />
+    <ui-dropdown
+      formControlName="passengers"
+      label="Number of passengers"
+      [options]="passengerOptions()"
+      errorMessage="Choose the number of passengers"
+    />
+  </div>
+
+  <div class="actions">
+    <ui-button type="submit">Continue</ui-button>
+  </div>
+</form>

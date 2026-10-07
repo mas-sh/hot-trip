@@ -1,1 +1,12 @@
-<p>booking-page works!</p>
+<layout-website>
+  @if (flight(); as flight) {
+    <div class="page">
+      <h1>Your flight</h1>
+      <ui-flight [flight]="flight" [selectable]="false" />
+      <booking-form [maxPassengers]="maxPassengers()" (submitted)="onSubmit($event)" />
+      @if (error()) {
+        <p class="error">Something went wrong while creating your booking. Please try again.</p>
+      }
+    </div>
+  }
+</layout-website>
