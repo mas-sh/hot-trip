@@ -1,0 +1,27 @@
+.container {
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+:host, #main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0;
+}
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  padding-top: 24px;
+
+  &.has-banner {
+    min-height: 420px;
+  }
+}
+
+.hero-image {
+  z-index: -1;
+  object-fit: cover;
+  object-position: center bottom;
+}

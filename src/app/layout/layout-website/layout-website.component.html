@@ -1,0 +1,10 @@
+<section class="hero" [class.has-banner]="bannerImage()">
+  @if (bannerImage()) {
+    <img class="hero-image" [ngSrc]="bannerImage()!" fill priority alt="" />
+  }
+  <layout-header class="container"></layout-header>
+</section>
+<div id="main-content" class="container">
+  <ng-content></ng-content>
+</div>
+<layout-footer></layout-footer>
