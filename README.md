@@ -4,6 +4,8 @@ Hot Trip is a demo flight booking app built with Angular and Angular Material. A
 
 There is no real backend yet. The app talks to API services that return mock data, so the whole flow can be tried without any server.
 
+**Live demo:** https://hot-trip.vercel.app/
+
 ## The booking flow
 
 1. **Home** (`/`): choose a departure city, a destination and a departure date. Tick *Round trip* to add a return date.
