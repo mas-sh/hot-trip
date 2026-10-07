@@ -1,0 +1,9 @@
+:host {
+  display: inline-block;
+}
+
+:host(.full-width),
+:host(.full-width) button {
+  display: block;
+  width: 100%;
+}

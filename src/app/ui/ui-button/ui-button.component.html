@@ -1,0 +1,24 @@
+<ng-template #content><ng-content /></ng-template>
+
+@switch (variant()) {
+  @case ('text') {
+    <button mat-button [type]="type()" [disabled]="disabled()">
+      <ng-container *ngTemplateOutlet="content" />
+    </button>
+  }
+  @case ('elevated') {
+    <button mat-raised-button [type]="type()" [disabled]="disabled()">
+      <ng-container *ngTemplateOutlet="content" />
+    </button>
+  }
+  @case ('outlined') {
+    <button mat-stroked-button [type]="type()" [disabled]="disabled()">
+      <ng-container *ngTemplateOutlet="content" />
+    </button>
+  }
+  @default {
+    <button mat-flat-button [type]="type()" [disabled]="disabled()">
+      <ng-container *ngTemplateOutlet="content" />
+    </button>
+  }
+}
