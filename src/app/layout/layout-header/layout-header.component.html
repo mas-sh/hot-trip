@@ -1,0 +1,19 @@
+<header class="header">
+  <a class="brand" routerLink="/">Hot Trip</a>
+  <nav>
+    <ul class="nav">
+      @for (item of navItems; track item.path) {
+        <li>
+          <a
+            class="nav-link"
+            [routerLink]="item.path"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+          >
+            {{ item.label }}
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+</header>
