@@ -1,0 +1,62 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 0;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: var(--mat-sys-primary)
+}
+
+.intro,
+.reference {
+  margin: 0;
+}
+
+.reference strong {
+  overflow-wrap: anywhere;
+}
+
+.card {
+  padding: 24px;
+  background: #fff;
+  color: #000;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+h2 {
+  margin: 0 0 16px;
+  font-size: 1.25rem;
+}
+
+dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 24px;
+  margin: 0;
+}
+
+dt {
+  color: rgba(0, 0, 0, 0.6);
+}
+
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.total {
+  font-weight: 700;
+}
+
+.message {
+  margin: 0;
+  padding: 24px;
+  background: #fff;
+  border-radius: 16px;
+  text-align: center;
+}

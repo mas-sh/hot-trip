@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { bookingGuard } from './guards/booking.guard';
 
 export const routes: Routes = [
     {
@@ -11,10 +12,15 @@ export const routes: Routes = [
     },
     {
         path: 'booking',
+        canActivate: [bookingGuard],
         loadComponent: () => import('./pages/booking-page/booking-page.component').then((c) => c.BookingPageComponent)
     },
     {
         path: 'confirmation',
+        redirectTo: ''
+    },
+    {
+        path: 'confirmation/:id',
         loadComponent: () => import('./pages/confirmation-page/confirmation-page.component').then((c) => c.ConfirmationPageComponent)
     }
 ];

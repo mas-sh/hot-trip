@@ -1,1 +1,35 @@
-<p>confirmation-page works!</p>
+<layout-website>
+  <div class="page">
+    @if (booking.isLoading()) {
+      <p class="message">Loading your booking…</p>
+    } @else if (booking.error()) {
+      <p class="message">
+        We couldn't load this booking. <a routerLink="/">Back to the home page</a>
+      </p>
+    } @else if (booking.hasValue()) {
+      @if (booking.value(); as result) {
+        <h1>Thank you, {{ result.details.fullName }}!</h1>
+        <p class="intro">Your booking is confirmed. Here is a summary.</p>
+        <p class="reference">Booking reference: <strong>{{ result.id }}</strong></p>
+
+        <ui-flight [flight]="result.flight" [selectable]="false" />
+
+        <section class="card">
+          <h2>Booking details</h2>
+          <dl>
+            <dt>Name</dt>
+            <dd>{{ result.details.fullName }}</dd>
+            <dt>Email</dt>
+            <dd>{{ result.details.email }}</dd>
+            <dt>Contact number</dt>
+            <dd>{{ result.details.phone }}</dd>
+            <dt>Passengers</dt>
+            <dd>{{ result.details.passengers }}</dd>
+            <dt>Total price</dt>
+            <dd class="total">{{ totalPrice() | currency: result.flight.price.currency }}</dd>
+          </dl>
+        </section>
+      }
+    }
+  </div>
+</layout-website>
