@@ -1,0 +1,21 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="fields">
+    <ui-dropdown formControlName="from" label="From" [options]="cities" errorMessage="Choose a departure city" />
+    <ui-dropdown formControlName="to" label="To" [options]="cities" errorMessage="Choose a destination" />
+    <ui-datepicker formControlName="departureDate" label="Departure date" [futureOnly]="true" errorMessage="Choose a valid departure date" />
+    @if (roundTrip()) {
+      <ui-datepicker
+        formControlName="returnDate"
+        label="Return date"
+        [futureOnly]="true"
+        [min]="departureDate()"
+        errorMessage="Choose a valid return date"
+      />
+    }
+  </div>
+
+  <div class="actions">
+    <ui-checkbox formControlName="roundTrip">Round trip</ui-checkbox>
+    <ui-button type="submit">Search flights</ui-button>
+  </div>
+</form>
