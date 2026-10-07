@@ -1,15 +1,31 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { Subject, of, throwError } from 'rxjs';
 
 import { BookingPageComponent } from './booking-page.component';
+import { BookingFormComponent } from './booking-form/booking-form.component';
 import { BookingApiService } from '../../data/api/booking-api.service';
+import { BookingDetails } from '../../data/models/booking-details';
 import { BookingService } from '../../services/booking.service';
 import { SAMPLE_FLIGHTS } from '../../data/mock/sample-flights';
 
 describe('BookingPageComponent', () => {
   let component: BookingPageComponent;
   let fixture: ComponentFixture<BookingPageComponent>;
+  let navigate: jasmine.Spy;
+  let createBooking: jasmine.Spy;
+
+  const details: BookingDetails = { fullName: 'Jane Doe', email: 'jane@example.com', phone: '+31 6 12345678', passengers: 2 };
+  const errorText = 'Something went wrong while creating your booking.';
+
+  const bookingForm = () =>
+    fixture.debugElement.query((de) => de.componentInstance instanceof BookingFormComponent)
+      .componentInstance as BookingFormComponent;
+  const submitForm = () => {
+    bookingForm().submitted.emit(details);
+    fixture.detectChanges();
+  };
+  const text = () => (fixture.nativeElement as HTMLElement).textContent;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,6 +35,8 @@ describe('BookingPageComponent', () => {
     .compileComponents();
 
     TestBed.inject(BookingService).selectFlight(SAMPLE_FLIGHTS[1]);
+    navigate = spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
+    createBooking = spyOn(TestBed.inject(BookingApiService), 'createBooking').and.returnValue(of('abc123'));
     fixture = TestBed.createComponent(BookingPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -31,20 +49,48 @@ describe('BookingPageComponent', () => {
   });
 
   it('should limit passengers to the seats left', () => {
-    expect(fixture.debugElement.query((de) => de.name === 'booking-form').componentInstance.maxPassengers())
-      .toBe(SAMPLE_FLIGHTS[1].availableSeats);
+    expect(bookingForm().maxPassengers()).toBe(SAMPLE_FLIGHTS[1].availableSeats);
   });
 
   it('should create the booking and go to its confirmation page', () => {
-    const navigate = spyOn(TestBed.inject(Router), 'navigate').and.resolveTo(true);
-    const createBooking = spyOn(TestBed.inject(BookingApiService), 'createBooking').and.returnValue(of('abc123'));
-    const details = { fullName: 'Jane Doe', email: 'jane@example.com', phone: '+31 6 12345678', passengers: 2 };
+    submitForm();
 
-    fixture.debugElement.query((de) => de.name === 'booking-form').componentInstance.submitted.emit(details);
-
-    const booking = TestBed.inject(BookingService);
     expect(createBooking).toHaveBeenCalledWith(SAMPLE_FLIGHTS[1].id, details);
-    expect(booking.details()).toEqual(details);
+    expect(TestBed.inject(BookingService).details()).toEqual(details);
     expect(navigate).toHaveBeenCalledWith(['/confirmation', 'abc123']);
+    expect(text()).not.toContain(errorText);
+  });
+
+  it('should show an error and stay on the page when the booking fails', () => {
+    createBooking.and.returnValue(throwError(() => new Error('Server error')));
+
+    submitForm();
+
+    expect(text()).toContain(errorText);
+    expect(navigate).not.toHaveBeenCalled();
+  });
+
+  it('should let the user try again after a failure, and clear the error on success', () => {
+    createBooking.and.returnValue(throwError(() => new Error('Server error')));
+    submitForm();
+
+    createBooking.and.returnValue(of('abc123'));
+    submitForm();
+
+    expect(createBooking).toHaveBeenCalledTimes(2);
+    expect(navigate).toHaveBeenCalledWith(['/confirmation', 'abc123']);
+    expect(text()).not.toContain(errorText);
+  });
+
+  it('should ignore extra submits while the booking is being created', () => {
+    const response = new Subject<string>();
+    createBooking.and.returnValue(response);
+
+    submitForm();
+    submitForm();
+    expect(createBooking).toHaveBeenCalledTimes(1);
+
+    response.next('abc123');
+    expect(navigate).toHaveBeenCalledOnceWith(['/confirmation', 'abc123']);
   });
 });
