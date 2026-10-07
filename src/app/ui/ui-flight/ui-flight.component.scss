@@ -1,0 +1,117 @@
+:host {
+  display: block;
+}
+
+.card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 32px;
+  padding: 20px 24px;
+  background: #fff;
+  color: #000;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.muted {
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.875rem;
+}
+
+.airline {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+}
+
+.airline-name {
+  font-weight: 600;
+}
+
+.route {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 16px;
+  min-width: 260px;
+}
+
+.stop {
+  display: flex;
+  flex-direction: column;
+}
+
+.time {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.day-offset {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.code {
+  font-weight: 500;
+}
+
+.duration {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.offer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+}
+
+.price {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.seats {
+  font-size: 0.875rem;
+  color: rgba(0, 0, 0, 0.6);
+
+  &.low,
+  &.sold-out {
+    color: #ba1a1a;
+    font-weight: 500;
+  }
+}
+
+.select {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 4px;
+  border: 0;
+  background: none;
+  color: #000;
+  font: inherit;
+  font-weight: 400;
+  cursor: pointer;
+
+  &:hover:not(:disabled),
+  &:focus-visible {
+    color: #ba1a1a;
+  }
+
+  &:disabled {
+    color: rgba(0, 0, 0, 0.38);
+    cursor: default;
+  }
+}

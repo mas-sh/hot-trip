@@ -1,1 +1,12 @@
-<p>search-page works!</p>
+<layout-website>
+  @if (hasSearch()) {
+    <div class="columns">
+      <flight-filters class="filters" />
+      <flight-results />
+    </div>
+  } @else {
+    <p class="message">
+      There is no search to show. <a routerLink="/">Start a new search</a>.
+    </p>
+  }
+</layout-website>

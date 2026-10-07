@@ -1,0 +1,28 @@
+<div class="toolbar">
+  <span class="count">
+    @if (!results.loading()) {
+      {{ results.visibleFlights().length }} {{ results.visibleFlights().length === 1 ? 'flight' : 'flights' }}
+    }
+  </span>
+  <ui-dropdown
+    class="sort"
+    label="Sort by"
+    [options]="sortOptions"
+    [ngModel]="results.sort()"
+    (ngModelChange)="results.setSort($event)"
+  />
+</div>
+
+@if (results.loading()) {
+  <p class="message">Loading flights…</p>
+} @else if (results.error()) {
+  <p class="message">Something went wrong while loading flights. Please try again.</p>
+} @else {
+  <div class="list">
+    @for (flight of results.visibleFlights(); track flight.id) {
+      <ui-flight [flight]="flight" (selected)="selectFlight(flight)" />
+    } @empty {
+      <p class="message">No flights match your filters.</p>
+    }
+  </div>
+}

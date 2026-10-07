@@ -1,0 +1,33 @@
+<aside class="card">
+  <div class="title">
+    <h2>Filters</h2>
+    @if (results.hasActiveFilters()) {
+      <ui-button variant="text" (click)="results.resetFilters()">Reset</ui-button>
+    }
+  </div>
+
+  <section>
+    <h3>Airlines</h3>
+    @for (airline of results.airlines(); track airline.code) {
+      <ui-checkbox
+        [ngModel]="results.selectedAirlines().has(airline.code)"
+        (ngModelChange)="results.setAirlineSelected(airline.code, $event)"
+      >
+        {{ airline.name }}
+      </ui-checkbox>
+    } @empty {
+      <p class="muted">No airlines to filter yet.</p>
+    }
+  </section>
+
+  <section>
+    <h3>Departure time</h3>
+    <ui-range-slider
+      [min]="0"
+      [max]="24"
+      [formatLabel]="formatHour"
+      [value]="results.departureHours()"
+      (valueChange)="results.setDepartureHours($event)"
+    />
+  </section>
+</aside>

@@ -1,0 +1,30 @@
+.columns {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.filters {
+  position: sticky;
+  top: 24px;
+}
+
+.message {
+  margin: 24px 16px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 16px;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .columns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .filters {
+    position: static;
+  }
+}

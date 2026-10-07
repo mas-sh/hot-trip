@@ -15,7 +15,7 @@ interface NavItem {
 export class LayoutHeaderComponent {
   protected readonly navItems: NavItem[] = [
     { label: 'Home', path: '/' },
-    { label: 'Search flights', path: '/search' },
-    { label: 'My booking', path: '/booking' },
+    { label: 'Contact us', path: '/contact-us' },
+    { label: 'Login', path: '/profile' },
   ];
 }

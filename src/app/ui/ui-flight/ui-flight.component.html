@@ -1,0 +1,53 @@
+<article class="card">
+  <div class="airline">
+    <span class="airline-name">{{ flight().airline.name }}</span>
+    <span class="muted">{{ flight().flightNumber }}</span>
+  </div>
+
+  <div class="route">
+    <div class="stop">
+      <span class="time">{{ flight().departure | date: 'HH:mm' }}</span>
+      <span class="code">{{ flight().from }}</span>
+      <span class="muted">{{ flight().departure | date: 'EEE d MMM' }}</span>
+    </div>
+
+    <div class="duration">
+      <span class="muted">{{ duration() }}</span>
+      <span class="line"></span>
+    </div>
+
+    <div class="stop">
+      <span class="time">
+        {{ flight().arrival | date: 'HH:mm' }}
+        @if (arrivalDayOffset() > 0) {
+          <sup class="day-offset">+{{ arrivalDayOffset() }}</sup>
+        }
+      </span>
+      <span class="code">{{ flight().to }}</span>
+      <span class="muted">{{ flight().arrival | date: 'EEE d MMM' }}</span>
+    </div>
+  </div>
+
+  <div class="offer">
+    <span class="price">{{ flight().price.amount | currency: flight().price.currency }}</span>
+    @if (flight().availableSeats === 0) {
+      <span class="seats sold-out">Sold out</span>
+    } @else {
+      <span class="seats" [class.low]="flight().availableSeats <= 5">
+        {{ flight().availableSeats }} {{ flight().availableSeats === 1 ? 'seat' : 'seats' }} left
+      </span>
+    }
+  </div>
+
+  @if (selectable()) {
+    <button
+      type="button"
+      class="select"
+      data-label="Select"
+      [disabled]="flight().availableSeats === 0"
+      (click)="selected.emit(flight())"
+    >
+      Select
+    </button>
+  }
+</article>
